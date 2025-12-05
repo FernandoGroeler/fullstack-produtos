@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { EstoqueRoutingModule } from './estoque-routing-module';
 import { CadastroProduto } from './cadastro-produto/cadastro-produto.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { CadastroProduto } from './cadastro-produto/cadastro-produto.component';
   ],
   imports: [
     CommonModule,
-    EstoqueRoutingModule
+    EstoqueRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class EstoqueModule { }
