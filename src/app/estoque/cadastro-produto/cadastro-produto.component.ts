@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CadastroProdutoService } from './cadastro-produto.service';
+import { ApiResponse } from '../../common/api-response.model';
+import { CadastroProduto } from './cadastro-produto';
 
 @Component({
   selector: 'app-cadastro-produto',
@@ -26,11 +28,11 @@ export class CadastroProdutoComponent {
 
     if (this.produtoForm.valid) {
       this.service.salvar(this.produtoForm.value).subscribe({
-        next: produto => {
-          console.log('Salvo com sucesso!', produto);
+        next: (apiResponse : ApiResponse<CadastroProduto>) => {
+          console.log(apiResponse.message, apiResponse.value);
           this.produtoForm.reset();
         },
-        error: erro => console.log('Ocorreu um erro: ', erro)
+        error: (apiResponse : ApiResponse<CadastroProduto>) => console.log('Ocorreu um erro: ', apiResponse.errors[0])
       });
     }
   }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CadastroProduto } from './cadastro-produto';
+import { ApiResponse } from '../../common/api-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +11,11 @@ import { CadastroProduto } from './cadastro-produto';
 export class CadastroProdutoService {
   constructor(private http: HttpClient) { }
 
-  salvar(cadastroProduto: CadastroProduto) : Observable<CadastroProduto> {
+  salvar(cadastroProduto: CadastroProduto) : Observable<ApiResponse<CadastroProduto>> {
     if (cadastroProduto.id) {
-      return this.http.put<CadastroProduto>(`http://localhost:5021/api/v1/produto`, cadastroProduto);
+      return this.http.put<ApiResponse<CadastroProduto>>(`http://localhost:5021/api/v1/produto`, cadastroProduto);
     }
 
-    return this.http.post<CadastroProduto>('http://localhost:5021/api/v1/produto', cadastroProduto);
-  }
-
-  listarTodos(): Observable<CadastroProduto[]> {
-    return this.http.get<CadastroProduto[]>('http://localhost:5021/api/v1/produto');
+    return this.http.post<ApiResponse<CadastroProduto>>('http://localhost:5021/api/v1/produto', cadastroProduto);
   }
 }

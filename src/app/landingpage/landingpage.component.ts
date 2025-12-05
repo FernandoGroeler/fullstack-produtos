@@ -9,9 +9,7 @@ import { Router } from '@angular/router';
 })
 
 export class LandingpageComponent {
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) { }
 
   navegarParaPaginas(): void {
     this.router.navigate(['/paginas']);
