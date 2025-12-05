@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutProps } from './layoutProps';
+import { LayoutProps } from './layoutprops';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 

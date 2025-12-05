@@ -3,11 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { provideHttpClient, withFetch } from '@angular/common/http'
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { LandingpageComponent } from './landingpage/landingpage.component'
 
 @NgModule({
   declarations: [
-    App
+    App,
+    LandingpageComponent
   ],
   imports: [
     BrowserModule,
