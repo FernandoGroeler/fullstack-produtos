@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Layout } from './layout/layout.component';
+import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
   {
     path: 'paginas',
-    component: Layout,
+    component: LayoutComponent,
     children: [
       {
         path: 'estoque',

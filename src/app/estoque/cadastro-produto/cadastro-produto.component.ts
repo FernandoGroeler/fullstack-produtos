@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CadastroProdutoService } from '../cadastro-produto.service';
 
 @Component({
   selector: 'app-cadastro-produto',
@@ -8,10 +9,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrl: './cadastro-produto.component.css',
 })
 
-export class CadastroProduto {
+export class CadastroProdutoComponent {
   produtoForm: FormGroup;
 
-  constructor() {
+  constructor(private service: CadastroProdutoService) {
     this.produtoForm = new FormGroup({
       nome: new FormControl('', Validators.required),
       descricao: new FormControl(''),
@@ -24,7 +25,13 @@ export class CadastroProduto {
     this.produtoForm.markAllAsTouched();
 
     if (this.produtoForm.valid) {
-      console.log('Valores digitados:', this.produtoForm.value);
+      this.service.salvar(this.produtoForm.value).subscribe({
+        next: produto => {
+          console.log('Salvo com sucesso!', produto);
+          this.produtoForm.reset();
+        },
+        error: erro => console.log('Ocorreu um erro: ', erro)
+      });
     }
   }
 

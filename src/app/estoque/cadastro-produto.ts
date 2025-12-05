@@ -1,5 +1,5 @@
 export class CadastroProduto {
-  id: string = '';
+  id?: string;
   nome: string = '';
   descricao?: string;
   preco: number = 0;

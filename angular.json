@@ -13,13 +13,22 @@
         "@schematics/angular:component": {
           "standalone": false,
           "type": "Component",
-          "addTypeToClassName": false
+          "addTypeToClassName": false,
+          "skipTests": true
         },
         "@schematics/angular:directive": {
           "standalone": false
         },
         "@schematics/angular:pipe": {
           "standalone": false
+        },
+        "@schematics/angular:service": {
+          "type": "service",
+          "addTypeToClassName": false,
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
         }
       },
       "root": "",
