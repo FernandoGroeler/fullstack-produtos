@@ -4,12 +4,14 @@ import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
   {
-    path: 'paginas',
+    path: '',
     component: LayoutComponent,
     children: [
       {
         path: 'estoque',
-        loadChildren: () => import('../estoque/estoque-module').then(m => m.EstoqueModule)
+        loadChildren: () => import('../estoque/estoque-module').then(m => m.EstoqueModule),
+        pathMatch: 'full',
+        data: { titulo: 'Estoque', subTitulo: 'Gestão de Estoque' }
       }
     ]
   }

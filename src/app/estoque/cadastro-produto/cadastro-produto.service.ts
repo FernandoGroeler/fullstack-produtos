@@ -11,6 +11,10 @@ export class CadastroProdutoService {
   constructor(private http: HttpClient) { }
 
   salvar(cadastroProduto: CadastroProduto) : Observable<CadastroProduto> {
+    if (cadastroProduto.id) {
+      return this.http.put<CadastroProduto>(`http://localhost:5021/api/v1/produto`, cadastroProduto);
+    }
+
     return this.http.post<CadastroProduto>('http://localhost:5021/api/v1/produto', cadastroProduto);
   }
 

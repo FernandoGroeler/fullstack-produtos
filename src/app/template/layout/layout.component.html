@@ -1,7 +1,7 @@
 <header class="bg-gradient-to-r from-blue-900 to-blue-500 p-4 text-white shadow-lg">
   <div class="text-center">
-    <h1 class="text-2xl font-bold">Titulo</h1>
-    <p class="text-lg mt-2">Subtitulo</p>
+    <h1 class="text-2xl font-bold">{{ props.titulo }}</h1>
+    <p class="text-lg mt-2">{{ props.subTitulo }}</p>
   </div>
 
   <div class="mt-4">
@@ -11,10 +11,20 @@
   <nav class="mt-4">
     <ul class="flex justify-center space-x-6 text-white font-semibold">
       <li>
-        <a class="hover:text-yellow-300">Estoque</a>
+        <a
+          class="hover:text-yellow-300"
+          routerLink="/paginas/estoque"
+        >
+          Estoque
+        </a>
       </li>
       <li>
-        <a class="hover:text-yellow-300">Sair</a>
+        <a
+          class="hover:text-yellow-300"
+          routerLink="/paginas"
+        >
+          Sair
+        </a>
       </li>
     </ul>
   </nav>

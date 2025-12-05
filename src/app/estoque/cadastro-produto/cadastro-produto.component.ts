@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CadastroProdutoService } from '../cadastro-produto.service';
+import { CadastroProdutoService } from './cadastro-produto.service';
 
 @Component({
   selector: 'app-cadastro-produto',
