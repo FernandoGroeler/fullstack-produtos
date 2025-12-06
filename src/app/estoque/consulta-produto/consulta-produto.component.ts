@@ -41,11 +41,11 @@ export class ConsultaProdutoComponent implements OnInit {
   }
 
   novoProduto() {
-    this.router.navigate(['/paginas/cadastro']);
+    this.router.navigate(['/paginas/estoque/cadastro']);
   }
 
   preparaEditar(id: string) {
-    this.router.navigate(['/paginas/cadastro'], { queryParams: { "id": id } });
+    this.router.navigate(['/paginas/estoque/cadastro'], { queryParams: { "id": id } });
   }
 
   excluirProduto(id: string) {

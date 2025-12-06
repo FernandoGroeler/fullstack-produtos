@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { TemplateRoutingModule } from './template-routing-module';
 import { LayoutComponent } from './layout/layout.component';
-import { EstoqueModule } from '../estoque/estoque-module';
-
 
 @NgModule({
   declarations: [
@@ -12,8 +10,7 @@ import { EstoqueModule } from '../estoque/estoque-module';
   ],
   imports: [
     CommonModule,
-    TemplateRoutingModule,
-    EstoqueModule
+    TemplateRoutingModule
   ]
 })
 export class TemplateModule { }

@@ -5,12 +5,14 @@ import { EstoqueRoutingModule } from './estoque-routing-module';
 import { CadastroProdutoComponent } from './cadastro-produto/cadastro-produto.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConsultaProdutoComponent } from './consulta-produto/consulta-produto.component';
+import { GestaoEstoqueComponent } from './gestao-estoque/gestao-estoque.component';
 
 
 @NgModule({
   declarations: [
     CadastroProdutoComponent,
-    ConsultaProdutoComponent
+    ConsultaProdutoComponent,
+    GestaoEstoqueComponent
   ],
   imports: [
     CommonModule,

@@ -10,7 +10,6 @@ const routes: Routes = [
       {
         path: 'estoque',
         loadChildren: () => import('../estoque/estoque-module').then(m => m.EstoqueModule),
-        pathMatch: 'full',
         data: { titulo: 'Estoque', subTitulo: 'Gestão de Estoque' }
       }
     ]
