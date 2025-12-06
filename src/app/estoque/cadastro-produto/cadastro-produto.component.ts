@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CadastroProdutoService } from './cadastro-produto.service';
 import { ApiResponse } from '../../common/api-response.model';
 import { CadastroProduto } from './cadastro-produto';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-cadastro-produto',
@@ -15,10 +16,12 @@ import { ActivatedRoute } from '@angular/router';
 export class CadastroProdutoComponent implements OnInit {
   produtoForm: FormGroup;
   atualizandoProduto: boolean = false;
+  snack: MatSnackBar = inject(MatSnackBar);
 
   constructor(
     private service: CadastroProdutoService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.produtoForm = new FormGroup({
       id: new FormControl(''),
@@ -35,10 +38,14 @@ export class CadastroProdutoComponent implements OnInit {
     if (this.produtoForm.valid) {
       this.service.salvar(this.produtoForm.value).subscribe({
         next: (apiResponse : ApiResponse<CadastroProduto>) => {
-          console.log(apiResponse.message, apiResponse.value);
+          this.mostrarMensagem(apiResponse.message);
           this.produtoForm.reset();
+          if (this.atualizandoProduto) {
+            this.navegarListaProduto();
+          }
+          this.atualizandoProduto = false;
         },
-        error: (apiResponse : ApiResponse<CadastroProduto>) => console.log('Ocorreu um erro: ', apiResponse.errors[0])
+        error: (apiResponse : ApiResponse<CadastroProduto>) => this.mostrarMensagem(`Ocorreu um erro: ${apiResponse.errors[0]}}`)
       });
     }
   }
@@ -61,7 +68,7 @@ export class CadastroProdutoComponent implements OnInit {
           estoqueAtual: value.estoqueAtual
         });
       },
-      error: (apiResponse : ApiResponse<CadastroProduto>) => console.log('Ocorreu um erro: ', apiResponse.errors[0])
+      error: (apiResponse : ApiResponse<CadastroProduto>) => this.mostrarMensagem(`Ocorreu um erro: ${apiResponse.errors[0]}`)
     });
   }
 
@@ -77,5 +84,15 @@ export class CadastroProdutoComponent implements OnInit {
         this.obterPorId(id);
       }
     });
+  }
+
+  mostrarMensagem(mensagem: string) {
+    this.snack.open(mensagem, 'Fechar', {
+      duration: 3000,
+    });
+  }
+
+  navegarListaProduto() {
+    this.router.navigate(['/paginas/estoque']);
   }
 }

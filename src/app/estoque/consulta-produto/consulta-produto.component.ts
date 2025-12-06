@@ -1,8 +1,9 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { ConsultaProdutoService } from './consulta-produto.service';
 import { ConsultaProduto } from './consulta-produto';
 import { ApiResponse } from '../../common/api-response.model';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-consulta-produto',
@@ -15,6 +16,7 @@ export class ConsultaProdutoComponent implements OnInit {
   listaProdutos = signal<ConsultaProduto[]>([]);
   isLoading = signal<boolean>(true);
   error = signal<string | null>(null);
+  snack: MatSnackBar = inject(MatSnackBar);
 
   constructor(
     private service: ConsultaProdutoService,
@@ -51,12 +53,18 @@ export class ConsultaProdutoComponent implements OnInit {
   excluirProduto(id: string) {
     this.service.excluirProduto(id).subscribe({
       next: (apiResponse : ApiResponse<boolean>) => {
-        console.log(apiResponse.message, apiResponse.value);
+        this.mostrarMensagem(apiResponse.message);
         this.listarProdutos();
       },
       error: (apiResponse : ApiResponse<boolean>) => {
-        console.log('Ocorreu um erro ao excluir o produto: ', apiResponse.errors[0]);
+        this.mostrarMensagem(`Ocorreu um erro ao excluir o produto: ${apiResponse.errors[0]}`);
       }
+    });
+  }
+
+  mostrarMensagem(mensagem: string) {
+    this.snack.open(mensagem, 'Fechar', {
+      duration: 3000,
     });
   }
 }

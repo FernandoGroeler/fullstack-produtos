@@ -80,7 +80,11 @@
       type="submit"
       class="w-full bg-blue-600 text-white font-semibold p-3 rounded shadow hover:bg-blue-700"
     >
-      Cadastrar Produto
+      @if (atualizandoProduto) {
+        Alterar Produto
+      } @else {
+        Cadastrar Produto
+      }
     </button>
   </form>
 </div>

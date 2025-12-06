@@ -3,13 +3,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CadastroProduto } from './cadastro-produto';
 import { ApiResponse } from '../../common/api-response.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class CadastroProdutoService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   salvar(cadastroProduto: CadastroProduto) : Observable<ApiResponse<CadastroProduto>> {
     if (cadastroProduto.id) {
