@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CadastroProduto } from './cadastro-produto';
 import { ApiResponse } from '../../common/api-response.model';
@@ -17,5 +17,10 @@ export class CadastroProdutoService {
     }
 
     return this.http.post<ApiResponse<CadastroProduto>>('http://localhost:5021/api/v1/produto', cadastroProduto);
+  }
+
+  obterProdutoPorId(id: string) : Observable<ApiResponse<CadastroProduto>> {
+    let params = new HttpParams().set('id', id);
+    return this.http.get<ApiResponse<CadastroProduto>>('http://localhost:5021/api/v1/produto', { params: params });
   }
 }

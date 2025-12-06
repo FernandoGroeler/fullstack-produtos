@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CadastroProdutoService } from './cadastro-produto.service';
 import { ApiResponse } from '../../common/api-response.model';
 import { CadastroProduto } from './cadastro-produto';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro-produto',
@@ -11,11 +12,16 @@ import { CadastroProduto } from './cadastro-produto';
   styleUrl: './cadastro-produto.component.css',
 })
 
-export class CadastroProdutoComponent {
+export class CadastroProdutoComponent implements OnInit {
   produtoForm: FormGroup;
+  atualizandoProduto: boolean = false;
 
-  constructor(private service: CadastroProdutoService) {
+  constructor(
+    private service: CadastroProdutoService,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.produtoForm = new FormGroup({
+      id: new FormControl(''),
       nome: new FormControl('', Validators.required),
       descricao: new FormControl(''),
       preco: new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -40,5 +46,36 @@ export class CadastroProdutoComponent {
   isCampoInvalido(nomeCampo: string): boolean {
     const campo = this.produtoForm.get(nomeCampo);
     return campo ? campo.invalid && (campo.dirty || campo.touched) && campo.errors?.['required'] : false;
+  }
+
+  obterPorId(id: string) {
+    this.service.obterProdutoPorId(id).subscribe({
+      next: (apiResponse : ApiResponse<CadastroProduto>) => {
+        let value = apiResponse.value as CadastroProduto;
+
+        this.produtoForm.patchValue({
+          id: value.id,
+          nome: value.nome,
+          descricao: value.descricao,
+          preco: value.preco,
+          estoqueAtual: value.estoqueAtual
+        });
+      },
+      error: (apiResponse : ApiResponse<CadastroProduto>) => console.log('Ocorreu um erro: ', apiResponse.errors[0])
+    });
+  }
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe( (query: any) => {
+      const params = query['params'];
+      const id = params['id'];
+
+      this.atualizandoProduto = false;
+
+      if (id) {
+        this.atualizandoProduto = true;
+        this.obterPorId(id);
+      }
+    });
   }
 }

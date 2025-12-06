@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ConsultaProdutoService } from './consulta-produto.service';
 import { ConsultaProduto } from './consulta-produto';
 import { ApiResponse } from '../../common/api-response.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-consulta-produto',
@@ -15,7 +16,10 @@ export class ConsultaProdutoComponent implements OnInit {
   isLoading = signal<boolean>(true);
   error = signal<string | null>(null);
 
-  constructor(private service: ConsultaProdutoService) { }
+  constructor(
+    private service: ConsultaProdutoService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.listarProdutos();
@@ -32,6 +36,26 @@ export class ConsultaProdutoComponent implements OnInit {
       error: (apiResponse : ApiResponse<ConsultaProduto[]>) => {
         this.error.set(`Erro ao carregar produtos: ${apiResponse.errors[0]}`);
         this.isLoading.set(false);
+      }
+    });
+  }
+
+  novoProduto() {
+    this.router.navigate(['/paginas/cadastro']);
+  }
+
+  preparaEditar(id: string) {
+    this.router.navigate(['/paginas/cadastro'], { queryParams: { "id": id } });
+  }
+
+  excluirProduto(id: string) {
+    this.service.excluirProduto(id).subscribe({
+      next: (apiResponse : ApiResponse<boolean>) => {
+        console.log(apiResponse.message, apiResponse.value);
+        this.listarProdutos();
+      },
+      error: (apiResponse : ApiResponse<boolean>) => {
+        console.log('Ocorreu um erro ao excluir o produto: ', apiResponse.errors[0]);
       }
     });
   }
